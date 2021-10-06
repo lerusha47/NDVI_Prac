@@ -29,7 +29,7 @@ plot.NDVI(dat)
 
 Q1: This plot suggests that Fynbos greenness (NDVI) as observed from satellite saturates with time since fire. Why do you think it saturates rather than increasing linearly with time?
 
->*Answer 1:*
+>*Answer 1:* There are likely seasonal changes in NDVI which cause the saturation observed in the plot. As NDVI is a level of greeness, for many plant species, NDVI might decrease in winter months (when leaves drop or are blocked from satellite view from factors such as snow) and peak in summer. Many Fynbos plants do not drop their leaves in winter so there is likely other reasons for the observed saturation evident on the plot. Apart from physiological changes of Fynbos leaf that occur during a year which could cause NDVI saturation, atmospheric conditions could also come into play in affecting satellite readings. MODIS is a passive sensor, meaning that although the greeness of certain species may not change seasonally,  if there is mist or haze, the MODIS satellite reading of NDVI would not be accurate as the sensors can only detect when there is naturally occurring energy. 
 <br>
 
 ### 2. Fit models using Non-linear Least Squares (NLS)
@@ -88,7 +88,8 @@ Lots more parameters...
 
 Q2: How do the estimates for the common parameters compare?
 
->*Answer 2:*
+>*Answer 2:* In both models all included parameters have a significant effect on the response variable (Pr <0.001). In terms of parameter estimates, the shared parameters between both models are alpha, gamma and lambda. The estimate values for alpha and lambda both decrease from the simple to the full model (from 0.25107 to 0.207522 and from 1.17687 to 0.989154, respectively). This may be due to other parameters included in the full model accounting for some of the variation accredited to these parameters in the simple model. The estimate value of the gamma parameter increase from 0.32371 to 0.364746 from the simple to full model. 
+
 <br>
 
 ### 3. Compare NLS models using ANOVA
@@ -105,10 +106,14 @@ anova(fit_negexp, fit_negexpS)
 
 Q3: Which model is better?
 
->*Answer 3:*
+>*Answer 3:* In using the output from the anova() function, one can tell that Model 2 (i.e. the full NLS) provide a significantly better fit to the data compared to Model 1 (simple NLS), as Pr = 4.12e-14. 
+
+<br>
+
 Q4: How many degrees of freedom are there in this ANOVA and why (i.e. what are they)?
 
->*Answer 4:*
+>*Answer 4:* There are 2 degrees of freedom and they are the A and phi parameters (i.e. the parameters in Model 2 which are not in Model 1).
+
 <br>
 
 ### 4. Fit models using Maximum Likelihood Estimation (MLE)
@@ -190,7 +195,8 @@ AIC_simple - AIC_full
 
 Q5: Is there a preferred model and if so, which one?
 
->*Answer 5:*
+>*Answer 5:* Yes. The full model is preferred as it has a lower AIC value compared to the simple model (AIC_simple - AIC_full = 266957.8; this indicates that the models are significantly different).
+
 <br>
 
 The nice thing about AIC is that the models you compare do not have to be nested like they do for ANOVA, as long as the data are the same. There are a few other constraints however... 
@@ -207,5 +213,6 @@ You'll notice that these are completely different to the AICs for the MLE models
 
 Q6: Why is it not okay to compare the AIC of these NLS models with the AIC of the MLE models? Hint: type `?AIC` into the R console and do some reading.
 
->*Answer 6:*
+>*Answer 6:* Theoretically, AIC requires the maximisation of log-likelihood, however AIC can be calculated for models that are not fitted by maximum likelihood. In this case, AIC is calculated for MLE  on the basis of maximised likelihood and NLS is not. Thus, their AIC values should not be compared.
+
 <br>
